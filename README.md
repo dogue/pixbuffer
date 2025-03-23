@@ -1,6 +1,6 @@
 # Pixbuffer
 
-A basic CPU-rendered pixel buffer for Odin, using SDL2. Inspired by Rust's `minifb` crate.
+A basic CPU-rendered pixel buffer for Odin, using SDL2. Inspired by Rust's [`minifb`](https://github.com/emoon/rust_minifb) crate.
 
 ## Features
 
