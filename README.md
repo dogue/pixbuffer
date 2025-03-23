@@ -9,6 +9,10 @@ A basic CPU-rendered pixel buffer for Odin, using SDL2. Inspired by Rust's [`min
 - Full exposure of the underlying data, meaning all of SDL2 is still available to you
 - A small set of simple drawing primitives (pixel, rect, line) in the `pixbuffer/draw` package
 
+## Considerations and caveats
+
+- Currently doesn't handle any sort of framerate limiting nor counting frame time delta
+
 ## Example
 
 ```odin
