@@ -46,8 +46,8 @@ CYAN :: Color{0, 255, 255, 255}
 
 CENTERED :: sdl.WINDOWPOS_CENTERED
 
-init_window :: proc(opts: Window_Options, clear_color := BLACK) -> (window: ^Window, err: Error) {
-    window = new(Window)
+init_window :: proc(opts: Window_Options, clear_color := BLACK, allocator := context.allocator) -> (window: ^Window, err: Error) {
+    window = new(Window, allocator)
 
     if sdl.Init(sdl.INIT_VIDEO) != 0 {
         err = .Initialization_Failed
@@ -81,7 +81,7 @@ init_window :: proc(opts: Window_Options, clear_color := BLACK) -> (window: ^Win
         return
     }
 
-    window.buffer = make([]u32, (size_of(u32) * window.width * window.height))
+    window.buffer = make([]u32, (size_of(u32) * window.width * window.height), allocator)
 
     window._handle.buffer_texture = sdl.CreateTexture(
         window._handle.renderer,
@@ -98,12 +98,12 @@ init_window :: proc(opts: Window_Options, clear_color := BLACK) -> (window: ^Win
     return
 }
 
-destroy_window :: proc(win: ^Window) {
+destroy_window :: proc(win: ^Window, allocator := context.allocator) {
     sdl.DestroyTexture(win._handle.buffer_texture)
     sdl.DestroyRenderer(win._handle.renderer)
     sdl.DestroyWindow(win._handle.window)
-    delete(win.buffer)
-    free(win)
+    delete(win.buffer, allocator)
+    free(win, allocator)
 }
 
 render :: proc(win: ^Window) {
