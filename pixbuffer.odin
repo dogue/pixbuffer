@@ -43,6 +43,7 @@ BLUE :: Color{0, 0, 255, 255}
 YELLOW :: Color{255, 255, 0, 255}
 MAGENTA :: Color{255, 0, 255, 255}
 CYAN :: Color{0, 255, 255, 255}
+DARK_GRAY :: Color{80, 80, 80, 255}
 
 CENTERED :: sdl.WINDOWPOS_CENTERED
 
@@ -56,8 +57,15 @@ init_window :: proc(opts: Window_Options, clear_color := BLACK, allocator := con
 
     display_mode: sdl.DisplayMode
     sdl.GetDisplayMode(0, 0, &display_mode)
-    window.width = int(display_mode.w)
-    window.height = int(display_mode.h)
+
+	// why did I do this?
+    // window.width = int(display_mode.w)
+    // window.height = int(display_mode.h)
+
+	// this is actually correct
+	window.width = opts.width
+	window.height = opts.height
+
     window.clear_color = clear_color
 
     window._handle.window = sdl.CreateWindow(
